@@ -16,3 +16,4 @@ spring:
 
 gl:
   topic-name: order-to-pay
+  topic-processed: order-processed

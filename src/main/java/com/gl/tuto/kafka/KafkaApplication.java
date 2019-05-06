@@ -23,6 +23,9 @@ public class KafkaApplication {
 	@Value("${gl.topic-name}")
 	private String topicName;
 
+	@Value("${gl.topic-processed}")
+	private String topicProcessed;
+
 	@Autowired
 	private KafkaProperties kafkaProperties;
 
@@ -32,7 +35,12 @@ public class KafkaApplication {
 
 	@Bean
 	public NewTopic adviceTopic() {
-		return new NewTopic(topicName, 3, (short) 1);
+		return new NewTopic(topicName, 1, (short) 1);
+	}
+
+	@Bean
+	public NewTopic processedTopic() {
+		return new NewTopic(topicProcessed, 1, (short) 1);
 	}
 
 	@Bean
@@ -41,6 +49,7 @@ public class KafkaApplication {
 		factory.setConsumerFactory(consumerFactory());
 		return factory;
 	}
+
 	@Bean
 	public ConsumerFactory<String, Object> consumerFactory() {
 		final JsonDeserializer<Object> jsonDeserializer = new JsonDeserializer<>();
